@@ -1,7 +1,7 @@
 # AI-Powered Context-Aware Chatbot
 
 ## 🤖 Project Overview
-![Chatbot Interface](image.png)
+![Chatbot Interface](images\image.png)
 This is an intelligent chatbot application that leverages cutting-edge AI technologies to provide context-aware responses. The chatbot uses web scraping, sentence embeddings, vector search, and OpenAI's language models to generate intelligent and contextually relevant answers.
 
 ## ✨ Key Features
