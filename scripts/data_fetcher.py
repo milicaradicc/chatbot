@@ -26,8 +26,6 @@ class DataFetcher:
         return all_sentences
 
     def fetch_and_split_sentences(self, url: str) -> List[str]:
-        # TODO: Split by tokens | ️ LangChain for the splitting of the text
-        #  sentence-window retrieval or hierarchical retrieval
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()

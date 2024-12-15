@@ -47,7 +47,6 @@ class MilvusHandler:
     def search_similar_sentences(self, query: str, top_k: int = 5) -> List[str]:
         self.collection.load()
         query_embedding = self.model.encode([query])[0]
-        # euclidean distance
         search_params = {
             "metric_type": "IP",
             "params": {"nprobe": 50}
@@ -71,16 +70,3 @@ class MilvusHandler:
         
         return unique_sentences
     
-
-        # recenice i njihove pozicije
-        # similar_sentences = [hit.entity.get('sentence') for hit in results[0]]
-        # sentence_positions = [hit.entity.get('position') for hit in results[0]]
-        
-        # window_sentences = []
-        
-        # komsije u window
-        # for position in sentence_positions:
-        #     start = max(0, position - window_size)
-        #     end = min(len(self.document_sentences), position + window_size + 1)
-        #     window_sentences.extend(self.document_sentences[start:end])
-        
