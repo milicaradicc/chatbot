@@ -31,8 +31,8 @@ This is an intelligent chatbot application that leverages cutting-edge AI techno
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/ai-chatbot.git
-   cd ai-chatbot
+   git clone https://github.com/milicaradicc/chatbot
+   cd chatbot
    ```
 
 2. Create a virtual environment
@@ -62,21 +62,9 @@ This is an intelligent chatbot application that leverages cutting-edge AI techno
 python main.py
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ## 📞 Contact
 
 Milica Radic - milica.t.radic@gmail.com
 
-Project Link: [https://github.com/yourusername/ai-chatbot](https://github.com/yourusername/ai-chatbot)
+Project Link: [https://github.com/milicaradicc/chatbot](https://github.com/milicaradicc/chatbot)
 
