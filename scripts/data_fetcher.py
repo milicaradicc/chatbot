@@ -35,8 +35,10 @@ class DataFetcher:
             paragraphs = soup.find_all('p')
             for paragraph in paragraphs:
                 text = ' '.join(paragraph.get_text().split())
+                # Replace symbols with white
                 text = re.sub(r'&[a-z]+;', '', text)
 
+                # Remove white spaces and add period where needed
                 paragraph_sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
                 sentences.extend([s.strip() + '.' for s in paragraph_sentences if s.strip() and len(s) > 10])
 

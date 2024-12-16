@@ -22,7 +22,7 @@ class ChatbotUI:
         self.embedder = SentenceTransformer(Config.SENTENCE_MODEL)
         self.data_fetcher = DataFetcher()
         self.milvus_handler = MilvusHandler(Config.MILVUS_HOST, Config.MILVUS_PORT, self.embedder)
-        self.openai_handler = OpenAIHandler(Config.AZURE_ENDPOINT, Config.AZURE_API_KEY)
+        self.openai_handler = OpenAIHandler(Config.AZURE_ENDPOINT, Config.AZURE_API_KEY,Config.VERSION)
         
         # Fetch and process URLs
         self.sentences = self.data_fetcher.fetch_and_process_urls()

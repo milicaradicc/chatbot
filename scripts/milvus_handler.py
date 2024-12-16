@@ -3,7 +3,7 @@ from pymilvus import connections, Collection, CollectionSchema, FieldSchema, Dat
 import numpy as np
 from sentence_transformers import SentenceTransformer
 class MilvusHandler:
-    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'test_collectio'):
+    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'testf_cdollectio'):
         self.host = host
         self.port = port
         self.collection_name = collection_name
@@ -19,6 +19,7 @@ class MilvusHandler:
 
     def create_collection(self):
         """Create a Milvus collection."""
+        # Automatically generated id, original sentance and the embedding
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=True),
             FieldSchema(name="sentence", dtype=DataType.VARCHAR, max_length=65535),
@@ -32,7 +33,7 @@ class MilvusHandler:
         index_params = {
             "metric_type": "IP",
             "index_type": "IVF_FLAT",
-            "params": {"nlist": 2048} # higher values improve search speed but consume more memory
+            "params": {"nlist": 2048} # Higher values improve search speed but consume more memory
         }
         self.collection.create_index("embedding", index_params)
 
@@ -44,9 +45,16 @@ class MilvusHandler:
         self.collection.insert(data)
         self.collection.flush()
 
+    '''
+    Total Clusters: 2048
+    nprobe = 10  → Searches 10 clusters (fast, less precise)
+    nprobe = 50  → Searches 50 clusters (moderate speed, balanced precision)
+    nprobe = 200 → Searches 200 clusters (slow, high precision)
+    '''
     def search_similar_sentences(self, query: str, top_k: int = 5) -> List[str]:
         self.collection.load()
         query_embedding = self.model.encode([query])[0]
+        # Number of clusters
         search_params = {
             "metric_type": "IP",
             "params": {"nprobe": 50}
@@ -54,19 +62,10 @@ class MilvusHandler:
         results = self.collection.search(
             data=[query_embedding],
             anns_field="embedding",
-            param=search_params,
-            limit=top_k,
-            output_fields=["sentence"]
+            param=search_params, # Cos and clusters
+            limit=top_k, # Max results
+            output_fields=["sentence"] # Original sentance
         )
-        unique_sentences = []
-        seen = set()
-        for hit in results[0]:
-            sentence = hit.entity.get('sentence')
-            if sentence not in seen:
-                unique_sentences.append(sentence)
-                seen.add(sentence)
-                if len(unique_sentences) == top_k:
-                    break
-        
-        return unique_sentences
+        return [hit.entity.get('sentence') for hit in results[0][:top_k]]
+
     

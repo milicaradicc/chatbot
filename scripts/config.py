@@ -12,6 +12,7 @@ class Config:
     # Azure OpenAI settings
     AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT", "")
     AZURE_API_KEY = os.getenv("AZURE_API_KEY", "")
+    VERSION = os.getenv("VERSION","2024-02-15-preview")
     
     # Sentence Transformer model settings
     SENTENCE_MODEL = os.getenv("SENTENCE_MODEL", "all-MiniLM-L6-v2")

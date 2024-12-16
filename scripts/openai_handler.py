@@ -2,11 +2,11 @@ from openai import AzureOpenAI
 from typing import List, Optional
 
 class OpenAIHandler:
-    def __init__(self, azure_endpoint: str, azure_api_key: str):
+    def __init__(self, azure_endpoint: str, azure_api_key: str, version: str):
         self.azure_client = AzureOpenAI(
             azure_endpoint=azure_endpoint,
             api_key=azure_api_key,
-            api_version="2024-02-15-preview"
+            api_version=version
         )
 
     def generate_response(self, query: str, context: List[str]) -> Optional[str]:
