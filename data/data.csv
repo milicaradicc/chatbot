@@ -1,0 +1,20 @@
+Subject,Start Date,Start Time,End Date,End Time,All day event,Reminder on/off,Reminder Date,Reminder Time,Meeting Organizer,Required Attendees,Optional Attendees,Meeting Resources,Categories,Description,Location,Mileage,Priority
+Team Meeting,1/11/2024,9:00,1/11/2024,10:00,No,On,1/11/2024,8:45,John Smith,Alice Green,Tom White,Projector; Notepad,Operations,Monthly team sync,Conference Room 1,5,Medium
+Strategy Session,1/12/2024,10:00,1/12/2024,12:00,No,Off,1/12/2024,9:45,Maria Johnson,Paul Brown,Lisa Black,Whiteboard; Markers,Strategy,Discuss Q2 strategy initiatives,Main Office,2,High
+Training Session,1/13/2024,14:00,1/13/2024,16:00,No,On,1/13/2024,13:45,David Lee,Sarah White,Emily Green,Projector; Handouts,Training,Staff training on new software,Virtual Meeting,,Low
+Client Review,1/14/2024,13:00,1/14/2024,15:00,No,On,1/14/2024,12:45,Rachel Adams,Michael Johnson,Amanda Blue,Screen Share,Client Relations,Review client projects and feedback,Client Office,10,Medium
+Budget Presentation,1/15/2024,11:00,1/15/2024,12:00,No,Off,1/15/2024,10:45,James White,Karen Green,Jessica Brown,Projector; Charts,Finance,Present budget for next fiscal year,Conference Room 2,3,High
+Design Review,1/16/2024,15:00,1/16/2024,17:00,No,On,1/16/2024,14:45,Linda Parker,Jenny Black,David Green,Whiteboard; Design Samples,Design,Review design concepts for approval,Virtual Meeting,,Medium
+Feedback Session,1/17/2024,10:00,1/17/2024,11:30,Yes,Off,1/17/2024,9:45,Robert King,Nadine Wells,Chris Evans,Notes; Projector,Operations,Gather feedback on the project,Auditorium,8,Low
+Staff Meeting,1/18/2024,9:00,1/18/2024,11:00,No,On,1/18/2024,8:45,Emma Thompson,Laura White,Tom Brown,Table; Papers,HR,Staff updates and policy reviews,Conference Room 3,6,Medium
+Innovation Workshop,1/19/2024,13:00,1/19/2024,16:00,No,On,1/19/2024,12:45,Sarah Johnson,Tom Green,Emily Black,Whiteboard; Post-its,R&D,Brainstorm new product ideas,Virtual Meeting,,High
+Partnership Call,1/20/2024,14:00,1/20/2024,15:30,No,Off,1/20/2024,13:45,Charles Wright,Jennifer Green,Mike Brown,Screen Share,Partnerships,Discuss partnership opportunities,Partner Office,12,Medium
+Project Kickoff,1/21/2024,15:00,1/21/2024,16:30,Yes,On,1/21/2024,14:45,Jane Smith,Greg White,Lisa Green,Projector; Handouts,Operations,Kickoff for new project,Main Office,5,High
+Monthly Review,1/22/2024,11:00,1/22/2024,12:30,Yes,Off,1/22/2024,10:45,Mark Wilson,Anna Brown,Tom Evans,Whiteboard; Files,Operations,Review monthly performance metrics,Virtual Meeting,,Medium
+Networking Event,1/23/2024,17:00,1/23/2024,19:00,No,On,1/23/2024,16:45,Kelly White,Mark Black,Rachel Green,Venue Setup,HR,Networking event for employees,Downtown Venue,15,Low
+Policy Meeting,1/24/2024,10:00,1/24/2024,11:30,Yes,Off,1/24/2024,9:45,John Smith,Nancy Adams,Tim Brown,Notepad; Projector,HR,Policy updates and compliance discussion,Conference Room 1,7,Medium
+Research Briefing,1/25/2024,13:00,1/25/2024,15:00,No,On,1/25/2024,12:45,Anna Johnson,David Green,Sarah White,Research Materials,R&D,Present findings from recent research,Virtual Meeting,,High
+Design Sprint,1/26/2024,8:00,1/26/2024,16:00,Yes,Off,1/26/2024,7:45,Linda King,John White,Chris Black,Whiteboard; Supplies,Design,Collaborative design sprint for new product,Main Office,4,Low
+Quarterly Review,1/27/2024,10:00,1/27/2024,12:00,No,On,1/27/2024,9:45,Rachel Adams,Tom Green,Emma White,Projector; Reports,Finance,Review quarterly performance,Auditorium,2,Medium
+Team Building,1/28/2024,11:00,1/28/2024,13:00,Yes,Off,1/28/2024,10:45,Philip Brown,Joan Green,Mike Evans,Team Materials,HR,Team building exercises and activities,Park,1,Low
+Product Launch,1/29/2024,10:00,1/29/2024,12:00,No,On,1/29/2024,9:45,Sarah Johnson,Maria Brown,Rachel Green,Projector; Banners,Marketing,Launch event for new product,Main Office,6,High
