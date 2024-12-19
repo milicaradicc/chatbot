@@ -3,7 +3,7 @@ from pymilvus import connections, Collection, CollectionSchema, FieldSchema, Dat
 import numpy as np
 from sentence_transformers import SentenceTransformer
 class MilvusHandler:
-    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'CollectionWikipedia'):
+    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'sv'):
         self.host = host
         self.port = port
         self.collection_name = collection_name
