@@ -95,8 +95,9 @@ Similar sentences are displayed in a separate section for transparency, so users
 
 **Directory Structure**
 ```bash
-├── chatbot.py                  # Main chatbot script with UI and logic
-├── config.py                   # Configuration settings for environment variables
+├── scripts  
+│   ├── chatbot.py              # Main chatbot script with UI and logic
+│   ├── config.py               # Configuration settings for environment variables
 ├── data/
 │   ├── links                   # File containing URLs for data fetching
 │   ├── data.csv                # CSV data file for meetings/events
