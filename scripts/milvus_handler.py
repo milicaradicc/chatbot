@@ -2,8 +2,9 @@ from typing import List
 from pymilvus import connections, Collection, CollectionSchema, FieldSchema, DataType
 import numpy as np
 from sentence_transformers import SentenceTransformer
+
 class MilvusHandler:
-    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'sv'):
+    def __init__(self, host: str, port: str, model: SentenceTransformer, collection_name: str = 'chatbot'):
         self.host = host
         self.port = port
         self.collection_name = collection_name
@@ -11,14 +12,12 @@ class MilvusHandler:
         self.model = model
         
     def connect(self):
-        """Connect to Milvus server."""
         try:
             connections.connect(alias="default", host=self.host, port=self.port)
         except Exception as e:
             print(f"Milvus connection error: {e}")
 
     def create_collection(self):
-        """Create a Milvus collection."""
         # Automatically generated id, original sentance and the embedding
         fields = [
             FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=True),

@@ -6,30 +6,30 @@ load_dotenv()
 
 from config import Config
 import pandas as pd
-import tkinter as tk
-from tkinter import scrolledtext
 from data_fetcher import DataFetcher
 from csv_data_fetcher import CSVDataFetcher
 from milvus_handler import MilvusHandler
 from openai_handler import OpenAIHandler
 from sentence_transformers import SentenceTransformer
 
-class ChatbotUI:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Chatbot UI")
-        self.root.geometry("600x400")
+import tkinter as tk
+from tkinter import scrolledtext
 
+# Load environment variables
+load_dotenv()
+
+class Chatbot:
+    def __init__(self):
         # Initialize components
         self.embedder = SentenceTransformer(Config.SENTENCE_MODEL)
         self.data_fetcher = DataFetcher()
-        self.csv_data_fetcher = CSVDataFetcher('data\data.csv')  # Load CSV
+        self.csv_data_fetcher = CSVDataFetcher('data/data.csv')  # Load CSV
         self.milvus_handler = MilvusHandler(Config.MILVUS_HOST, Config.MILVUS_PORT, self.embedder)
-        self.openai_handler = OpenAIHandler(Config.AZURE_ENDPOINT, Config.AZURE_API_KEY,Config.VERSION)
+        self.openai_handler = OpenAIHandler(Config.AZURE_ENDPOINT, Config.AZURE_API_KEY, Config.VERSION, "data/data.csv")
 
-        # Fetch and process URLs
+        # Fetch and process URLs and CSV data
         self.sentences = self.data_fetcher.fetch_and_process_urls()
-        self.csv_sentences = self.csv_data_fetcher.fetch_and_process_csv()  # Get CSV data
+        self.csv_sentences = self.csv_data_fetcher.fetch_and_process_csv()
 
         # Combine web and CSV sentences
         self.sentences.extend(self.csv_sentences)
@@ -41,102 +41,79 @@ class ChatbotUI:
         self.milvus_handler.create_collection()
         self.milvus_handler.insert_embeddings(self.sentences, self.embeddings)
 
-        # Create UI components
-        self.create_widgets()
+    def get_similar_sentences(self, query: str):
+        return self.milvus_handler.search_similar_sentences(query)
 
-    def display_message(self, message):
-        # Insert message into the chat history textbox
-        self.chat_history.config(state=tk.NORMAL)
-        self.chat_history.insert(tk.END, message + '\n')
-        self.chat_history.config(state=tk.DISABLED)
-        self.chat_history.yview(tk.END)  # Scroll to the bottom
+    def generate_response(self, query: str, similar_sentences):
+        return self.openai_handler.generate_response(query, similar_sentences)
 
-    def query_csv_data(self, query: str, df: pd.DataFrame):
-        """Function to query calendar data based on date or subject"""
-        if 'date' in query.lower():
-            date_str = re.search(r'\d{4}-\d{2}-\d{2}', query)  # Extract date (YYYY-MM-DD)
-            if date_str:
-                date = date_str.group(0)
-                result = df[df['Start Date'] == date]
-                if not result.empty:
-                    return result[['Subject', 'Start Time', 'End Time', 'Location']].to_string(index=False)
-                return "No events found on this date."
-        elif 'subject' in query.lower():
-            subject_match = re.search(r'subject\s*:\s*(\w+)', query, re.IGNORECASE)
-            if subject_match:
-                subject = subject_match.group(1)
-                result = df[df['Subject'].str.contains(subject, case=False)]
-                if not result.empty:
-                    return result[['Subject', 'Start Date', 'Start Time', 'End Time', 'Location']].to_string(index=False)
-                return f"No events found with the subject containing '{subject}'."
-        return "I'm sorry, I couldn't understand your query related to the calendar."
+class ChatUI:
+    def __init__(self, root, chatbot):
+        self.chatbot = chatbot
 
-    def interact_with_calendar_db(self, query: str):
-        """Handles interaction with the calendar CSV data"""
-        calendar_data = CSVDataFetcher('data\data.csv')  # Replace with your actual CSV path
-        df = calendar_data.df
-        response = self.query_csv_data(query, df)
-        return response
+        self.root = root
+        self.root.title("Chatbot Interface")
+        
+        self.frame = tk.Frame(root)
+        self.frame.pack(padx=10, pady=10)
 
-    def interact_with_wikipedia_db(self, query: str):
-        similar_sentences = self.milvus_handler.search_similar_sentences(query)
-        if similar_sentences:
-            return "\n".join(similar_sentences)
-        else:
-            return "No relevant information found from Wikipedia."
+        self.chat_history = scrolledtext.ScrolledText(self.frame, height=20, width=70, wrap=tk.WORD, state=tk.DISABLED)
+        self.chat_history.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
-    def create_widgets(self):
-        # Textbox for displaying chat history
-        self.chat_history = scrolledtext.ScrolledText(self.root, height=15, width=70, wrap=tk.WORD, state=tk.DISABLED)
-        self.chat_history.grid(row=0, column=0, padx=10, pady=10)
+        self.chat_history.tag_config("user", foreground="blue")  # User messages in blue
+        self.chat_history.tag_config("bot", foreground="green")  # Bot messages in green
 
-        # Input field for user query
-        self.query_input = tk.Entry(self.root, width=70)
-        self.query_input.grid(row=1, column=0, padx=10, pady=10)
+        self.user_input = tk.Entry(self.frame, width=60)
+        self.user_input.grid(row=1, column=0, padx=10, pady=10)
 
-        # Button to send the query
-        self.send_button = tk.Button(self.root, text="Send", width=10, command=self.handle_query)
-        self.send_button.grid(row=2, column=0, padx=10, pady=10)
+        self.submit_button = tk.Button(self.frame, text="Send", command=self.handle_query)
+        self.submit_button.grid(row=1, column=1, padx=10, pady=10)
+
+        self.similar_sentences_text = tk.Text(self.frame, height=10, width=40, wrap=tk.WORD, state=tk.DISABLED)
+        self.similar_sentences_text.grid(row=0, column=2, rowspan=2, padx=10, pady=10)
 
     def handle_query(self):
-        query = self.query_input.get()
-        if query.lower() == 'exit':
-            self.root.quit()
+        query = self.user_input.get()
+        if query.strip() == '':
             return
 
-        self.display_message(f"You: {query}")
+        self.display_message(query, "User")
 
-        similar_sentences = self.milvus_handler.search_similar_sentences(query)
-        self.display_message("Similar Sentences:")
-        for sentence in similar_sentences:
-            self.display_message(f"- {sentence}")
+        similar_sentences = self.chatbot.get_similar_sentences(query)
 
-        # Pass similar_sentences as context to generate_response
-        response = self.openai_handler.generate_response(query, similar_sentences)
-        if response:
-            self.display_message(f"Response: {response}")
-        else:
-            self.display_message("No response generated.")
+        self.display_similar_sentences(similar_sentences)
 
-        self.query_input.delete(0, tk.END)
+        response = self.chatbot.generate_response(query, similar_sentences)
 
-    def display_message(self, message):
-        # Insert message into the chat history textbox
+        self.display_message(response, "Bot")
+
+        self.user_input.delete(0, tk.END)
+
+    def display_message(self, message, sender):
         self.chat_history.config(state=tk.NORMAL)
-        self.chat_history.insert(tk.END, message + '\n')
+        if sender == "User":
+            self.chat_history.insert(tk.END, f"You: {message}\n", "user")
+        else:
+            self.chat_history.insert(tk.END, f"Bot: {message}\n", "bot")
         self.chat_history.config(state=tk.DISABLED)
-        self.chat_history.yview(tk.END)  # Scroll to the bottom
+        self.chat_history.yview(tk.END)
 
-# Main function to run the application
+    def display_similar_sentences(self, similar_sentences):
+        self.similar_sentences_text.config(state=tk.NORMAL)
+        self.similar_sentences_text.delete(1.0, tk.END)
+        if similar_sentences:
+            self.similar_sentences_text.insert(tk.END, "Similar sentences:\n")
+            for sentence in similar_sentences:
+                self.similar_sentences_text.insert(tk.END, f"- {sentence}\n")
+        else:
+            self.similar_sentences_text.insert(tk.END, "No similar sentences found.")
+        self.similar_sentences_text.config(state=tk.DISABLED)
+
 def main():
-    try:
-        # Create the Tkinter root window
-        root = tk.Tk()
-        chatbot_ui = ChatbotUI(root)
-        root.mainloop()
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    chatbot = Chatbot()
+    root = tk.Tk()
+    chat_ui = ChatUI(root, chatbot)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
