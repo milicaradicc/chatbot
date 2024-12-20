@@ -70,7 +70,7 @@ In this image, the chatbot answers a query related to CSV files. It highlights t
 ## 🖥 Running the Application
 
 ```bash
-python main.py
+python chatbot.py
 ```
 ## How it works
 - **Fetching Data**:
