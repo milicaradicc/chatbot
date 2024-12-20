@@ -5,15 +5,15 @@ This project implements a chatbot capable of answering user queries by utilizing
 
 ## 📸 Visual Demonstrations
 ### Answer to a Question About Links
-![Answer to a Question About Links](images\link.png)
+![Answer to a Question About Links](images/link.png)
 This image shows the chatbot’s response when asked about links. It demonstrates the AI's ability to extract and process content from URLs and present relevant information clearly.
 
 ### Answer to a Question About CSV Files
-![Answer to a Question About CSV Files](images\csv.png)
+![Answer to a Question About CSV Files](images/csv.png)
 In this image, the chatbot answers a query related to CSV files. It highlights the chatbot's capacity to understand and respond to questions involving structured data formats, showcasing its ability to handle diverse content queries effectively.
 
 ### Plot on 2D graph using PCA
-![Plot on 2D graph using PCA](images\pca.png)
+![Plot on 2D graph using PCA](images/pca.png)
 
 
 ## ✨ Key Features
