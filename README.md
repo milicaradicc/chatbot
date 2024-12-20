@@ -4,13 +4,17 @@
 This project implements a chatbot capable of answering user queries by utilizing similarity search over web-scraped and CSV data combined with an AI model for generating responses. It leverages the Milvus vector database for efficient similarity search, and Azure's OpenAI API to generate detailed responses based on context.
 
 ## 📸 Visual Demonstrations
-Answer to a Question About Links
-
+### Answer to a Question About Links
+![Answer to a Question About Links](images\link.png)
 This image shows the chatbot’s response when asked about links. It demonstrates the AI's ability to extract and process content from URLs and present relevant information clearly.
 
-Answer to a Question About CSV Files
-
+### Answer to a Question About CSV Files
+![Answer to a Question About CSV Files](images\csv.png)
 In this image, the chatbot answers a query related to CSV files. It highlights the chatbot's capacity to understand and respond to questions involving structured data formats, showcasing its ability to handle diverse content queries effectively.
+
+### Plot on 2D graph using PCA
+![Plot on 2D graph using PCA](images\pca.png)
+
 
 ## ✨ Key Features
 
@@ -90,27 +94,31 @@ The chatbot interface uses Tkinter, displaying the conversation history and prov
 Similar sentences are displayed in a separate section for transparency, so users can see the data used to generate the response.
 
 **Directory Structure**
-bash
-Copy code
+```bash
 ├── chatbot.py                  # Main chatbot script with UI and logic
 ├── config.py                   # Configuration settings for environment variables
 ├── data/
 │   ├── links                   # File containing URLs for data fetching
 │   ├── data.csv                # CSV data file for meetings/events
 ├── requirements.txt            # List of Python dependencies
-└── .env                        # Environment variable file
+└── .env                        # Environment variable file```
+```
 
 **Troubleshooting**
 Common Issues:
-Milvus Connection Error: Ensure that the Milvus service is running locally or accessible remotely. You can start Milvus using Docker or through its official installation guide.
-Missing CSV or URL File: Ensure that the data/links and data/data.csv files are correctly set up and populated.
-API Key Errors: Ensure your Azure OpenAI API key is correct and that your endpoint is active.
-Milvus Setup:
+*Milvus Connection Error*: 
+Ensure that the Milvus service is running locally or accessible remotely. You can start Milvus using Docker or through its official installation guide.
+*Missing CSV or URL File*: 
+Ensure that the data/links and data/data.csv files are correctly set up and populated.
+*API Key Errors*: 
+Ensure your Azure OpenAI API key is correct and that your endpoint is active.
+
+**Milvus Setup**:
 If you're using Milvus locally, you can start it with Docker:
 
-bash
-Copy code
+```bash
 docker run -d --name milvus -p 19530:19530 milvusdb/milvus:v2.0.0
+```
 Alternatively, follow the Milvus installation guide for other setup options.
 
 ## 📞 Contact
